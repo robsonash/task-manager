@@ -25,7 +25,7 @@ const Auth = () => {
   };
 
   return (
-    <div>
+    <div  className="text-center">
     {!user ? (
   <button
   onClick={handleLogin}

@@ -1,27 +1,26 @@
 import { useState, useEffect } from "react";
-import { loginWithGoogle, logout, onAuthStateChangedListener } from "../firebase/auth"; // Importando as funções de auth
-import { User } from "firebase/auth"; // Importando o tipo User do Firebase
+import { loginWithGoogle, logout, onAuthStateChangedListener } from "../firebase/auth";
+import { User } from "firebase/auth"; 
 
 const Auth = () => {
-  const [user, setUser] = useState<User | null>(null); // Tipando o estado como User ou null
+  const [user, setUser] = useState<User | null>(null); 
 
-  // Monitorando o estado de autenticação do usuário
   useEffect(() => {
     onAuthStateChangedListener((user) => {
-      setUser(user); // Atualiza o estado quando o usuário faz login ou logout
+      setUser(user);
     });
   }, []);
 
   const handleLogin = async () => {
     const user = await loginWithGoogle();
     if (user) {
-      setUser(user); // Atualiza o estado com o usuário autenticado
+      setUser(user);
     }
   };
 
   const handleLogout = async () => {
     await logout();
-    setUser(null); // Limpa o estado do usuário após o logout
+    setUser(null);
   };
 
   return (

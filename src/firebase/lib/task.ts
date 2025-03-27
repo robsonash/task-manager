@@ -1,4 +1,4 @@
-import { collection, addDoc, Timestamp, getDocs, query, where, QuerySnapshot, DocumentData } from "firebase/firestore";
+import { collection, addDoc, Timestamp, getDocs, query, where, QuerySnapshot, DocumentData,doc,updateDoc, deleteDoc  } from "firebase/firestore";
 import { db } from "../config";
 
 // Tipando a tarefa
@@ -66,4 +66,19 @@ export const getTasksByUserId = async (userId: string): Promise<Task[]> => {
     console.error("Erro ao buscar tarefas: ", e);
     return [];
   }
+};
+
+export const updateTask = async (taskId: string, updatedData: Partial<Task>) => {
+  try {
+    const taskRef = doc(db, "tasks", taskId);
+    await updateDoc(taskRef, updatedData);
+    return true;
+  } catch (error) {
+    console.error("Erro ao atualizar tarefa:", error);
+    throw new Error("Não foi possível atualizar a tarefa");
+  }
+};
+
+export const deleteTask = async (taskId: string) => {
+  await deleteDoc(doc(db, "tasks", taskId));
 };
